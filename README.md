@@ -1,38 +1,43 @@
-# create-svelte
+# cpValor
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+cpValor is a web application that helps users discover the worth of their coding proviles like Codeforces and Leetcode.
 
-## Creating a project
+## Features
 
-If you're seeing this, you've probably already done this step. Congrats!
+- Select the coding platfrom between Codeforces and Leetcode to calculate the worth of your programming profile.
+- Input your username to generate a worth score based on various factors.
+- Stylish and user-friendly interface.
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+## Getting Started
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+### Prerequisites
 
-## Developing
+- Node.js and npm installed on your machine.
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+### Installation
 
-```bash
-npm run dev
+1. Clone the repository:
+   ```
+   git clone https://github.com/bj-jiwrajka/cpValor.git
+   ```
+2. Change into the project directory:
+    ```
+    cd cpValor
+    ```
+3. Install dependencies:
+    ```
+    npm install
+    ```
+4. Run the development server:
+    ```
+    npm run dev
+    ```
+5.  Open your browser and navigate to http://localhost:5173.Choose the platform, enter your username, and click "Generate Worth" to see your programming profile's worth.
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+### Customize
 
-## Building
+Feel free to customize the application according to your needs. You can modify styles, add new features, or enhance existing functionality.
 
-To create a production version of your app:
+### Contributing
 
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+Contributions are welcome! If you find a bug, have a feature request, or want to contribute in any way, please open an issue or submit a pull reques

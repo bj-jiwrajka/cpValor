@@ -80,7 +80,7 @@
 			<input bind:value={handle} type="text" class="input-username" on:keydown={handleEnterKey} />
 			<button on:click={generateWorth} class="worth-btn"> Generate Worth </button>
 		</div>
-		<p style="color: red; margin-top: 1rem; text-align: center;">{s}</p>
+		<p style="color: red; margin: 1rem; text-align: center;">{s}</p>
 	{:else if platform == 'Codeforces'}
 		<div class="results">
 			<img src={avatar} alt="cf-avatar" id="cf-avatar" />
@@ -143,7 +143,6 @@
 	p {
 		font-family: Poppins;
 		font-size: 1.2rem;
-		font-weight: 600;
 		text-align: center;
 		color: #002939;
 		margin: 0;
@@ -155,10 +154,11 @@
 		color: #212152;
 		font-weight: 600;
 		margin-bottom: 0;
-		margin-top: 5rem;
+		margin-top: 4rem;
 	}
 	#caption {
 		margin: 1.5rem auto;
+		font-weight: 600;
 	}
 	.platforms {
 		display: flex;
@@ -230,14 +230,63 @@
 	.results {
 		display: flex;
 		flex-direction: column;
-		gap: 0.5rem;
+		gap: 0.3rem;
 		margin-bottom: 1rem;
+		font-weight: 500;
 	}
 	#cf-avatar {
 		width: 8rem;
 		height: 8rem;
 		margin: auto;
 		border-radius: 50%;
+	}
+
+	@media (max-width: 768px) {
+		h1 {
+			font-size: 2rem;
+		}
+		#caption {
+			font-size: 1rem;
+			width: 90%;
+		}
+		img {
+			width: 15rem;
+			height: 11rem;
+		}
+		.platforms {
+			flex-direction: column;
+			gap: 1rem;
+		}
+		.handle {
+			flex-direction: column;
+			gap: 0.5rem;
+		}
+		.user-handle {
+			font-size: 1rem;
+		}
+		.input-username {
+			height: 2.8rem;
+			font-size: 1rem;
+			width: 9.7rem;
+		}
+		.worth-btn {
+			font-size: 1rem;
+			padding: 0.8rem 2rem;
+		}
+		button{
+			height: 3rem;
+		}
+		.developer {
+			font-size: 1rem;
+		}
+		.results {
+			font-size: 1rem;
+			width: 90%;
+		}
+		#cf-avatar {
+			width: 6rem;
+			height: 6rem;
+		}
 	}
 
 	/* let shareUrl = 'https://cpvalor.netlify.app/';
