@@ -40,7 +40,14 @@ export async function leetcodeWorth(handle) {
 			totalQuestions
 		});
 
-		return { error: false, message: 'Your Leetcode profile is worth ' + worth + ` $` };
+		return {
+			error: false,
+			message: 'Congratulations ! Your Leetcode profile is worth ' + worth + ` $`,
+			totalSolved: totalSolved,
+			easySolved: easySolved,
+			mediumSolved: mediumSolved,
+			hardSolved: hardSolved
+		};
 	} catch (error) {
 		return { error: true, message: 'Error: ' + error.message };
 	}

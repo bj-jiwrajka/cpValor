@@ -33,8 +33,14 @@ export async function codeforcesWorth(handle) {
 			maxRating,
 			registrationTimeSeconds
 		});
-
-		return { error: false, message: 'Your Codeforces profile is worth ' + worth + ` $` };
+		return {
+			error: false,
+			message: 'Congratulations ! Your Codeforces profile is worth ' + worth + ` $`,
+			totalContribution: contribution,
+			rating: rating,
+			maxRating: maxRating,
+			avatar: avatar
+		};
 	} catch (error) {
 		return { error: true, message: 'Error: ' + error.message };
 	}

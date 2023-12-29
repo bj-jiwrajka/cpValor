@@ -4,9 +4,17 @@
 	import { codeforcesWorth } from '$lib/index.js';
 	import characters from '$lib/character-1.gif';
 
-	let platform = '';
-	let handle = '';
-	let s = '';
+	let platform = '',
+		handle = '',
+		s = '',
+		totalContribution = '',
+		rating = '',
+		maxRating = '',
+		avatar = '',
+		totalSolved = '',
+		easySolved = '',
+		mediumSolved = '',
+		hardSolved = '';
 	let errorMsg = false;
 
 	function setPlatform(selectedPlatform) {
@@ -16,33 +24,31 @@
 	async function generateWorth() {
 		s = '';
 		errorMsg = false;
+		let result;
 		if (platform == 'Codeforces') {
-			try {
-				const result = await codeforcesWorth(handle);
-				if (result.error) {
-					errorMsg = true;
-				}
-				s = result.message;
-			} catch (error) {
-				s = error.message;
-				errorMsg = true;
-			}
+			result = await codeforcesWorth(handle);
+			(totalContribution = result.totalContribution),
+				(rating = result.rating),
+				(maxRating = result.maxRating),
+				(avatar = result.avatar);
 		} else if (platform == 'Leetcode') {
-			try {
-				const result = await leetcodeWorth(handle);
-				if (result.error) {
-					errorMsg = true;
-				}
-				s = result.message;
-			} catch (error) {
-				s = error.message;
-				errorMsg = true;
-			}
+			result = await leetcodeWorth(handle);
+			(totalSolved = result.totalSolved),
+				(easySolved = result.easySolved),
+				(mediumSolved = result.mediumSolved),
+				(hardSolved = result.hardSolved);
 		} else {
 			s = 'Please select a platform';
 			errorMsg = true;
 		}
+		if (result) {
+			s = result.message;
+			if (result.error) {
+				errorMsg = true;
+			}
+		}
 	}
+
 	function handleEnterKey(event) {
 		if (event.key === 'Enter') {
 			generateWorth();
@@ -53,7 +59,7 @@
 <main>
 	<h1>CPValor</h1>
 	<img src={characters} alt="" />
-	<p>
+	<p id="caption">
 		"Choose the Platform to Uncover Your Code's Worth: Discover the Value of Your Programming
 		Skills"
 	</p>
@@ -75,9 +81,41 @@
 			<button on:click={generateWorth} class="worth-btn"> Generate Worth </button>
 		</div>
 		<p style="color: red; margin-top: 1rem; text-align: center;">{s}</p>
+	{:else if platform == 'Codeforces'}
+		<div class="results">
+			<img src={avatar} alt="cf-avatar" id="cf-avatar" />
+			<p>Total Contribution: {totalContribution}</p>
+			<p>Rating: {rating}</p>
+			<p>Max rating: {maxRating}</p>
+			<p>{s}</p>
+		</div>
+		<div class="buttons">
+			<button
+				class="worth-btn"
+				on:click={() => {
+					s = '';
+					errorMsg = false;
+				}}>Refresh</button
+			>
+			<button class="worth-btn">Share</button>
+		</div>
 	{:else}
-		<div style="margin-top: 5rem; color: green;">
-			{s}
+		<div class="results">
+			<p>Total Solved: {totalSolved}</p>
+			<p>Easy Solved: {easySolved}</p>
+			<p>Medium Solved: {mediumSolved}</p>
+			<p>Hard Solved: {hardSolved}</p>
+			<p>{s}</p>
+		</div>
+		<div class="buttons">
+			<button
+				class="worth-btn"
+				on:click={() => {
+					s = '';
+					errorMsg = false;
+				}}>Refresh</button
+			>
+			<button class="worth-btn">Share</button>
 		</div>
 	{/if}
 
@@ -108,6 +146,8 @@
 		font-weight: 600;
 		text-align: center;
 		color: #002939;
+		margin: 0;
+		padding: 0;
 	}
 
 	h1 {
@@ -117,7 +157,9 @@
 		margin-bottom: 0;
 		margin-top: 5rem;
 	}
-
+	#caption {
+		margin: 1.5rem auto;
+	}
 	.platforms {
 		display: flex;
 		gap: 2rem;
@@ -175,10 +217,27 @@
 		color: #fff;
 	}
 	.developer {
-		position: absolute;
+		position: relative;
 		bottom: 0;
 		font-size: 1.2rem;
 		color: #3a3a66;
+	}
+	.buttons {
+		display: flex;
+		gap: 1rem;
+		margin-bottom: 1rem;
+	}
+	.results {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		margin-bottom: 1rem;
+	}
+	#cf-avatar {
+		width: 8rem;
+		height: 8rem;
+		margin: auto;
+		border-radius: 50%;
 	}
 
 	/* let shareUrl = 'https://cpvalor.netlify.app/';
