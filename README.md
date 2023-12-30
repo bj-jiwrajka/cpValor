@@ -1,6 +1,6 @@
 # cpValor
 
-cpValor is a web application that helps users discover the worth of their coding proviles like Codeforces and Leetcode.
+cpValor is a web application that helps users discover the worth of their coding proviles like Codeforces and Leetcode. View live at https://cpValor.netlify.app
 
 ## Features
 
@@ -14,7 +14,7 @@ cpValor is a web application that helps users discover the worth of their coding
 
 - Node.js and npm installed on your machine.
 
-### Installation
+### Installation and Usage
 
 1. Clone the repository:
    ```
@@ -32,7 +32,9 @@ cpValor is a web application that helps users discover the worth of their coding
     ```
     npm run dev
     ```
-5.  Open your browser and navigate to http://localhost:5173.Choose the platform, enter your username, and click "Generate Worth" to see your programming profile's worth.
+5.  Open your browser and navigate to http://localhost:5173
+
+6.  Choose the platform, enter your username, and click "Generate Worth" to see your programming profile's worth.
 
 ### Customize
 

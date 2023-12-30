@@ -2,7 +2,8 @@
 	// @ts-nocheck
 	import { leetcodeWorth } from '$lib/index.js';
 	import { codeforcesWorth } from '$lib/index.js';
-	import characters from '$lib/character-1.gif';
+	import characters from '$lib/assets/cpvalor-img.gif';
+	import Icon from '@iconify/svelte';
 
 	let platform = '',
 		handle = '',
@@ -14,7 +15,9 @@
 		totalSolved = '',
 		easySolved = '',
 		mediumSolved = '',
-		hardSolved = '';
+		hardSolved = '',
+		worth = '',
+		buttonText = 'Generate Worth';
 	let errorMsg = false;
 
 	function setPlatform(selectedPlatform) {
@@ -25,22 +28,28 @@
 		s = '';
 		errorMsg = false;
 		let result;
-		if (platform == 'Codeforces') {
+		if (platform == '') {
+			s = 'Please select a platform';
+			errorMsg = true;
+			return;
+		} else if (platform === 'Codeforces') {
+			buttonText = 'Generating...';
 			result = await codeforcesWorth(handle);
 			(totalContribution = result.totalContribution),
 				(rating = result.rating),
 				(maxRating = result.maxRating),
+				(worth = result.worth),
 				(avatar = result.avatar);
-		} else if (platform == 'Leetcode') {
+		} else {
+			buttonText = 'Generating...';
 			result = await leetcodeWorth(handle);
 			(totalSolved = result.totalSolved),
 				(easySolved = result.easySolved),
+				(worth = result.worth),
 				(mediumSolved = result.mediumSolved),
 				(hardSolved = result.hardSolved);
-		} else {
-			s = 'Please select a platform';
-			errorMsg = true;
 		}
+		buttonText = 'Generate Worth';
 		if (result) {
 			s = result.message;
 			if (result.error) {
@@ -52,6 +61,22 @@
 	function handleEnterKey(event) {
 		if (event.key === 'Enter') {
 			generateWorth();
+		}
+	}
+	async function shareResults() {
+		try {
+			let shareMessage = '';
+			if (platform === 'Codeforces') {
+				shareMessage = `🚀 Do you know how much worth is your coding profile? Just calculated my Codeforces profile worth on CPValor: ${worth}$! Check it out at https://cpvalor.netlify.app 🔥 #Codeforces`;
+			} else if (platform === 'Leetcode') {
+				shareMessage = `🚀 Do you know how much worth is your coding profile? Just calculated my Leetcode profile worth on CPValor: ${worth}$! Check it out at https://cpvalor.netlify.app 🔥 #Leetcode`;
+			}
+			const shareDialogUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+				shareMessage
+			)}`;
+			window.open(shareDialogUrl, '_blank');
+		} catch (error) {
+			console.error('Error sharing:', error.message);
 		}
 	}
 </script>
@@ -78,7 +103,7 @@
 		<div class="handle">
 			<span class="user-handle">Enter Username:</span>
 			<input bind:value={handle} type="text" class="input-username" on:keydown={handleEnterKey} />
-			<button on:click={generateWorth} class="worth-btn"> Generate Worth </button>
+			<button on:click={generateWorth} class="worth-btn">{buttonText}</button>
 		</div>
 		<p style="color: red; margin: 1rem; text-align: center;">{s}</p>
 	{:else if platform == 'Codeforces'}
@@ -97,7 +122,10 @@
 					errorMsg = false;
 				}}>Refresh</button
 			>
-			<button class="worth-btn">Share</button>
+			<button class="worth-btn" on:click={shareResults}
+				>Share
+				<Icon icon="akar-icons:twitter-fill" style="color: #fff; font-size: 1rem;"></Icon></button
+			>
 		</div>
 	{:else}
 		<div class="results">
@@ -115,7 +143,10 @@
 					errorMsg = false;
 				}}>Refresh</button
 			>
-			<button class="worth-btn">Share</button>
+			<button class="worth-btn" on:click={shareResults}
+				>Share
+				<Icon icon="akar-icons:twitter-fill" style="color: #fff; font-size: 1.2rem;"></Icon>
+			</button>
 		</div>
 	{/if}
 
@@ -154,7 +185,7 @@
 		color: #212152;
 		font-weight: 600;
 		margin-bottom: 0;
-		margin-top: 4rem;
+		margin-top: 2rem;
 	}
 	#caption {
 		margin: 1.5rem auto;
@@ -202,6 +233,11 @@
 	.worth-btn {
 		color: #fff;
 		background-color: #3a3a66;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 0.3rem;
+		width: 14rem;
 	}
 	.worth-btn:hover {
 		background-color: #2e2e66;
@@ -271,9 +307,10 @@
 		}
 		.worth-btn {
 			font-size: 1rem;
-			padding: 0.8rem 2rem;
+			width: 11.5rem;
+			padding: 0;
 		}
-		button{
+		button {
 			height: 3rem;
 		}
 		.developer {
@@ -287,28 +324,9 @@
 			width: 6rem;
 			height: 6rem;
 		}
+		.buttons {
+			display: flex;
+			flex-direction: column;
+		}
 	}
-
-	/* let shareUrl = 'https://cpvalor.netlify.app/';
-	// let shareTitle = 'CPValor';
-	// let shareText = 'Check out my CPValor';
-	// let shareVia = 'CPValor';
-	// let shareHashtags = 'CPValor';
-	// let shareImage = 'https://cpvalor.netlify.app/share.png';
-	// function shareSM() {
-	// 	if (navigator.share) {
-	// 		navigator
-	// 			.share({
-	// 				title: shareTitle,
-	// 				text: shareText,
-	// 				url: shareUrl
-	// 			})
-	// 			.then(() => console.log('Successful share'))
-	// 			.catch((error) => console.log('Error sharing', error));
-	// 	} else {
-	// 		alert('Web Share API not supported');
-	// 	}
-	// } 
-	<!-- <button on:click={shareSM}> Share.. </button> -->
-	*/
 </style>

@@ -46,7 +46,8 @@ export async function leetcodeWorth(handle) {
 			totalSolved: totalSolved,
 			easySolved: easySolved,
 			mediumSolved: mediumSolved,
-			hardSolved: hardSolved
+			hardSolved: hardSolved,
+			worth:worth
 		};
 	} catch (error) {
 		return { error: true, message: 'Error: ' + error.message };

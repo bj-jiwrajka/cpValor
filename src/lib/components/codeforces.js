@@ -39,7 +39,8 @@ export async function codeforcesWorth(handle) {
 			totalContribution: contribution,
 			rating: rating,
 			maxRating: maxRating,
-			avatar: avatar
+			avatar: avatar,
+			worth:worth
 		};
 	} catch (error) {
 		return { error: true, message: 'Error: ' + error.message };
